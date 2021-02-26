@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         //db内のタスクが格納されるリスト。
         //日時の近い順でソート：昇順
         //以降内容をアップデートするとリスト内は自動的に更新される。
-    var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "data", ascending: true) //追加
+    var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: true) //追加
     
     override func viewDidLoad() {
         super.viewDidLoad()
