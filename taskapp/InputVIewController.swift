@@ -10,9 +10,11 @@ import RealmSwift
 import UserNotifications
 
 class InputVIewController: UIViewController {
-    @IBOutlet weak var titleTextField: UILabel!
-    @IBOutlet weak var contentsTextView: UITextField!
+  
+    @IBOutlet weak var titleTextFIeld: UITextField!
+    @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var category: UITextField!
     
     let realm = try! Realm()
     var task :Task! //追加
@@ -25,9 +27,10 @@ class InputVIewController: UIViewController {
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(disimissKeyboard))
         self.view.addGestureRecognizer(tapGesture)
         
-        titleTextField.text = task.title
+        titleTextFIeld.text = task.title
         contentsTextView.text = task.contents
         datePicker.date = task.date
+        category.text = category.text
     }
         @objc func disimissKeyboard(){
         //キーボード を閉じる
@@ -37,8 +40,8 @@ class InputVIewController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         try! realm.write{
-            self.task.title = self.titleTextField.text!
-            self.task.contents = self.contentsTextView.text!
+            self.task.title = self.titleTextFIeld.text!
+            self.task.contents = self.contentsTextView.text
             self.task.date = self.datePicker.date
             self.realm.add(self.task, update: .modified)
         }
