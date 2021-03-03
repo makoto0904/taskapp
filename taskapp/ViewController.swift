@@ -9,25 +9,34 @@ import UIKit
 import RealmSwift //追加
 import UserNotifications //追加
 
-class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate {
     
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+  
+
     
     //Realmインスタンスを取得する
-    let realm = try! Realm() //追加
+    let realm = try! Realm()
+    
     
     
         //db内のタスクが格納されるリスト。
         //日時の近い順でソート：昇順
         //以降内容をアップデートするとリスト内は自動的に更新される。
     var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: true) //追加
+        
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
         
     }
     //データの数（＝セルの数）を返すメソッド
@@ -97,7 +106,7 @@ class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     //segueで画面遷移する時に呼ばれる
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        let inputViewController:InputVIewController = segue.destination as! InputVIewController
+        let inputViewController:InputViewController = segue.destination as! InputViewController
         
         if segue.identifier == "cellSegue"{
             let indexPath = self.tableView.indexPathForSelectedRow
@@ -118,6 +127,33 @@ class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+          
+            view.endEditing(true)
+            // 入力された値がnilでなければif文のブロック内の処理を実行
+        
+        guard let searchText = searchBar.text else {
+            return
+        }
+               
+                
+            
+        let text = searchText
+        let result = try!
+            realm.objects(Task.self).sorted(byKeyPath: "date", ascending: true).filter("category == %@", text)
+             
+             let count = result.count
+             
+             if(count == 0){
+                 taskArray = realm.objects(Task.self)
+             }else{
+                 taskArray = result
+                
+             }
+             tableView.reloadData()
+    }
+    
 }
 
 

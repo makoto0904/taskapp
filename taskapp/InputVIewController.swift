@@ -9,15 +9,16 @@ import UIKit
 import RealmSwift
 import UserNotifications
 
-class InputVIewController: UIViewController {
+class InputViewController: UIViewController {
   
     @IBOutlet weak var titleTextFIeld: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var category: UITextField!
     
+    
     let realm = try! Realm()
-    var task :Task! //追加
+    var task: Task! //追加
     
 
     override func viewDidLoad() {
@@ -30,7 +31,8 @@ class InputVIewController: UIViewController {
         titleTextFIeld.text = task.title
         contentsTextView.text = task.contents
         datePicker.date = task.date
-        category.text = category.text
+        category.text = task.category
+    
     }
         @objc func disimissKeyboard(){
         //キーボード を閉じる
@@ -43,6 +45,7 @@ class InputVIewController: UIViewController {
             self.task.title = self.titleTextFIeld.text!
             self.task.contents = self.contentsTextView.text
             self.task.date = self.datePicker.date
+            self.task.category = self.category.text!
             self.realm.add(self.task, update: .modified)
         }
         setNotification(task: task) //追加
