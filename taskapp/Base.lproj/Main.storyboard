@@ -92,7 +92,7 @@
                     <navigationItem key="navigationItem" id="zKy-uP-KDN"/>
                     <connections>
                         <outlet property="category" destination="26f-Vl-TH0" id="GO6-ne-28N"/>
-                        <outlet property="contentsTextView" destination="NGI-ag-tsN" id="8Za-MQ-ks8"/>
+                        <outlet property="contentsTextView" destination="xEI-ys-Wfm" id="rez-AX-sfa"/>
                         <outlet property="datePicker" destination="jyH-q5-iD0" id="vq2-9x-shD"/>
                         <outlet property="titleTextFIeld" destination="NGI-ag-tsN" id="4p4-ec-jQo"/>
                     </connections>
